@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:clickable="true"
+    android:elevation="0dp"
+    android:focusable="true"
+    app:cardBackgroundColor="@color/cardview_light_background"
+
+    app:cardUseCompatPadding="false"
+    app:theme="@style/Base.ThemeOverlay.AppCompat"
+    android:foreground="?android:attr/selectableItemBackground">
+
+
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:scaleType="fitXY"
+            android:id="@+id/songImage"
+            android:padding="0dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/music4"
+            android:adjustViewBounds="true"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/song_title"
+                android:textColor="#000"
+                android:textSize="15sp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/song_artist"
+                android:textColor="#000"
+                android:textSize="12dp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>
