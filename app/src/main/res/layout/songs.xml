@@ -43,7 +43,6 @@
                 android:id="@+id/song_title"
                 android:textColor="#000"
                 android:textSize="15sp"
-                android:ellipsize="end"
                 android:maxLines="1"
                 android:textStyle="bold"/>
 
