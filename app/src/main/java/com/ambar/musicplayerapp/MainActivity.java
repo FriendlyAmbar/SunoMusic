@@ -18,30 +18,41 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.SeekBar;
+import android.widget.TextView;
 
 import com.ambar.musicplayerapp.fragment.FragmentArtist;
 import com.ambar.musicplayerapp.fragment.FragmentSongs;
 import com.ambar.musicplayerapp.fragment.FragmentAlbums;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.net.URI;
 import java.util.ArrayList;
+import java.util.logging.Handler;
 
 public class MainActivity extends AppCompatActivity implements FragmentSongs.OnFragmentReady{
 
 
 
-    private SectionsPagerAdapter mSectionsPagerAdapter;
-    private ViewPager mViewPager;
+     SectionsPagerAdapter mSectionsPagerAdapter;
+     ViewPager mViewPager;
     ListView listView;
     ImageButton stop;
-    ArrayList<Songs> songList;
+    ArrayList<Songs> songList = new ArrayList<>();
     boolean playing = false;
     int current = -1;
     int seektime = 0;
     MediaPlayer player;
     FragmentSongs fragmentSongs=null;
     public static final String TAG = "SONG";
+    ImageView currentSongImage;
+    TextView currentSong, currentArtist;
+    SeekBar seekBar;
+    android.os.Handler mhandler;
+    Runnable runnable;
 
 
     @Override
@@ -51,9 +62,10 @@ public class MainActivity extends AppCompatActivity implements FragmentSongs.OnF
 
 
         listView = (ListView) findViewById(R.id.listView);
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        currentSongImage = (ImageView)findViewById(R.id.currentSongImage);
+        currentSong = (TextView)findViewById(R.id.currentSong);
+        currentArtist = (TextView)findViewById(R.id.currentArtist);
+        seekBar = (SeekBar)findViewById(R.id.seekbar);
 
 
 
@@ -62,6 +74,9 @@ public class MainActivity extends AppCompatActivity implements FragmentSongs.OnF
         mViewPager.setAdapter(mSectionsPagerAdapter);
         TabLayout tabLayout = (TabLayout)findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
+
+        mhandler = new android.os.Handler();
+
 
 
     }
@@ -80,17 +95,25 @@ public class MainActivity extends AppCompatActivity implements FragmentSongs.OnF
         @Override
         public Fragment getItem(int position) {
             Fragment fragment = null;
+
             if (position == 0) {
+                if(fragmentSongs==null) {
+                    fragmentSongs = FragmentSongs.newInstance();
+                }
                     fragmentSongs = new FragmentSongs();
                     fragmentSongs.setOnFragmentReady(new FragmentSongs.OnFragmentReady() {
                         @Override
                         public void ready() {
-                            fragmentSongs.ArrayListReceive(songList);
+                            fragmentSongs.getSongList();
                         }
+                    });
 
+                    fragmentSongs.setOnSongClickListener(new FragmentSongs.OnSongClickListener() {
                         @Override
-                        public void onClicked(int pos) {
-                            playSong(songList.get(pos).getData(),pos,0);
+                        public void onSongClick(int pos) {
+                            seektime=0;
+                            current=pos;
+                            playSong(songList.get(current).getData(), current, 0);
                         }
                     });
 
@@ -133,9 +156,12 @@ public class MainActivity extends AppCompatActivity implements FragmentSongs.OnF
                 player.release();
 
             player = MediaPlayer.create(MainActivity.this, Uri.fromFile(new File(data)));
+
             playing = true;
+
             player.prepareAsync();
             player.seekTo(seek);
+
             player.start();
             current = p;
             stop.setImageResource(R.drawable.pause);
@@ -156,14 +182,21 @@ public class MainActivity extends AppCompatActivity implements FragmentSongs.OnF
     }
 
 
+
+
     @Override
     public void ready() {
         fragmentSongs.ArrayListReceive(songList);
     }
 
     @Override
-    public void onClicked(int pos) {
-        playSong(songList.get(pos).getData(),pos,0);
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
     }
 
     @Override

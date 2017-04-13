@@ -6,6 +6,7 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,7 +16,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ambar.musicplayerapp.R;
 import com.ambar.musicplayerapp.Songs;
@@ -27,6 +30,9 @@ import java.util.Collections;
 import java.util.Comparator;
 
 import static com.ambar.musicplayerapp.MainActivity.TAG;
+import static com.ambar.musicplayerapp.R.id.currentArtist;
+import static com.ambar.musicplayerapp.R.id.currentSong;
+import static com.ambar.musicplayerapp.R.id.currentSongImage;
 
 /**
  * Created by ambar on 12-04-2017.
@@ -34,25 +40,56 @@ import static com.ambar.musicplayerapp.MainActivity.TAG;
 
 public class FragmentSongs extends android.support.v4.app.Fragment {
 
-    private ListView listView;
-    ArrayList<Songs> songList = new ArrayList<>();
+     ListView listView;
+    ArrayList<Songs> songList;
     SongAdapter songAdapter = null;
     boolean playing = false;
     int current = -1;
     int seektime = 0;
     MediaPlayer player;
     ImageButton next, previous, stop;
-
+    ImageView currentSongImage;
+    TextView currentSong, currentArtist;
+    SeekBar seekBar;
+    android.os.Handler mhandler;
+    Runnable runnable;
 
     OnFragmentReady readyListener;
 
     public interface OnFragmentReady {
         void ready();
-        void onClicked(int pos);
     }
 
     public void setOnFragmentReady(OnFragmentReady listener) {
         readyListener = listener;
+    }
+
+
+    OnSongClickListener SongClickListener;
+
+    public interface OnSongClickListener {
+       void onSongClick(int pos);
+    }
+
+    public void setOnSongClickListener (OnSongClickListener listener){
+        SongClickListener = listener;
+    }
+
+
+    public static FragmentSongs newInstance() {
+
+        FragmentSongs fragment = new FragmentSongs();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate( Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments()!=null){
+            Toast.makeText(getContext(), ""+songList.size(), Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -61,6 +98,8 @@ public class FragmentSongs extends android.support.v4.app.Fragment {
         readyListener.ready();
     }
 
+
+
     @Override
     public View onCreateView(LayoutInflater inflater,  ViewGroup container, Bundle savedInstanceState) {
         View viewRoot = inflater.inflate(R.layout.fragmentsongs,container,false);
@@ -68,6 +107,11 @@ public class FragmentSongs extends android.support.v4.app.Fragment {
         next = (ImageButton) viewRoot.findViewById(R.id.next);
         stop = (ImageButton) viewRoot.findViewById(R.id.stop);
         previous = (ImageButton) viewRoot.findViewById(R.id.previous);
+        currentSongImage = (ImageView)viewRoot.findViewById(R.id.currentSongImage);
+        currentSong = (TextView)viewRoot.findViewById(R.id.currentSong);
+        currentArtist = (TextView)viewRoot.findViewById(R.id.currentArtist);
+        seekBar = (SeekBar)viewRoot.findViewById(R.id.seekbar);
+
 
 
         songList  = new ArrayList<>();
@@ -85,6 +129,28 @@ public class FragmentSongs extends android.support.v4.app.Fragment {
         songAdapter = new SongAdapter(getContext(),songList);
         listView.setAdapter(songAdapter);
 
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if (playing) {
+                    player.seekTo(progress * 1000);
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+                if (player ==null) {
+                    seektime=seekBar.getProgress();
+                    player.seekTo(seekBar.getProgress());
+                }
+            }
+        });
 
         stop.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,11 +160,20 @@ public class FragmentSongs extends android.support.v4.app.Fragment {
                     player.pause();
                     playing = false;
                     stop.setImageResource(R.drawable.play);
-                } else if (current != -1) {
+                }
+
+                if (current==songList.size()) {
+
+                }
+
+                else if (current != -1) {
                     player.start();
                     playing = true;
                     stop.setImageResource(R.drawable.pause);
-                } else if (songList.size() != 0) {
+                }
+
+                else if (songList.size() != 0) {
+                    updatePlayerDetail(current);
                     playSong(songList.get(0).getData(), 0, 0);
                     stop.setImageResource(R.drawable.pause);
                 }
@@ -113,12 +188,12 @@ public class FragmentSongs extends android.support.v4.app.Fragment {
                     player.stop();
                     playing = false;
                 }
-
-                if (current == songList.size()) {
-                    //
-                } else if (current != -1) {
-                    playSong(songList.get(current + 1).getData(), current + 1, 0);
+                if (current != -1) {
+                    current++;
+                    updatePlayerDetail(current);
+                    playSong(songList.get(current).getData(), current, 0);
                 } else {
+                    updatePlayerDetail(current);
                     playSong(songList.get(0).getData(), 0, 0);
                 }
             }
@@ -132,12 +207,12 @@ public class FragmentSongs extends android.support.v4.app.Fragment {
                     playing = false;
                 }
 
-                if (current == songList.size()) {
-
-                } else if (current == -1 || current == 0) {
-
-                } else if (current != -1) {
-                    playSong(songList.get(current - 1).getData(), current - 1, 0);
+                if (current == -1 || current == 0) {
+                        //Do nothing
+                } else  {
+                    current--;
+                    updatePlayerDetail(current);
+                    playSong(songList.get(current).getData(), current, 0);
                 }
 
             }
@@ -238,7 +313,7 @@ public class FragmentSongs extends android.support.v4.app.Fragment {
             TextView songView = (TextView) songLay.findViewById(R.id.song_title);
             TextView artistView = (TextView) songLay.findViewById(R.id.song_artist);
             //get song using position
-            Songs currSong = songs.get(position);
+            final Songs currSong = songs.get(position);
             //get title and artist strings
             songView.setText(currSong.getTitle());
             artistView.setText(currSong.getArtist());
@@ -254,6 +329,7 @@ public class FragmentSongs extends android.support.v4.app.Fragment {
                 public void onClick(View v) {
                     seektime = 0;
                     playSong(s.getData(), p, 0);
+                    updatePlayerDetail(current);
 
                 }
             });
@@ -277,12 +353,25 @@ public class FragmentSongs extends android.support.v4.app.Fragment {
             playing = true;
             player.prepareAsync();
             player.seekTo(seek);
+            player.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                @Override
+                public void onPrepared(MediaPlayer mp) {
+                    seekBar.setMax(mp.getDuration());
+                    seekBar.setProgress(0);
+                    playCycle();
+                }
+            });
             player.start();
             current = p;
             stop.setImageResource(R.drawable.pause);
         } catch (IllegalStateException e) {
             player.seekTo(seek);
+            if(player.getDuration()!=-1){
+                seekBar.setProgress(seek);
+            }else {
+                seekBar.setProgress(0);
 
+            }
             player.start();
             current = p;
             stop.setImageResource(R.drawable.pause);
@@ -291,8 +380,34 @@ public class FragmentSongs extends android.support.v4.app.Fragment {
             @Override
             public void onCompletion(MediaPlayer mp) {
                 stop.setImageResource(R.drawable.play);
-
+                seektime=seekBar.getMax();
             }
         });
+    }
+
+    public void updatePlayerDetail (int pos){
+        Songs songs = songList.get(pos);
+        currentSong.setText(songs.getTitle());
+        currentArtist.setText(songs.getArtist());
+
+        try {
+            Picasso.with(getContext()).load(new File(songs.getArtPath())).fit().into(currentSongImage);
+        }catch (Exception e) {
+            Picasso.with(getContext()).load(R.drawable.music4).fit().into(currentSongImage);
+        }
+    }
+
+        public void playCycle() {
+            if(player != null){
+                int mCurrentPosition = player.getCurrentPosition() / 1000;
+                seekBar.setProgress(mCurrentPosition);
+            }
+            mhandler.postDelayed(runnable, 1000);
+        }
+
+
+    @Override
+    public void onStop() {
+        super.onStop();
     }
 }

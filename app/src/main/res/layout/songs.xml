@@ -23,8 +23,8 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:layout_width="75dp"
-            android:layout_height="75dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:scaleType="fitXY"
             android:id="@+id/songImage"
             android:padding="0dp"
@@ -36,14 +36,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="8dp">
+            android:padding="10dp">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/song_title"
+                android:fontFamily="sans-serif"
+                android:maxLines="1"
                 android:textColor="#000"
                 android:textSize="15sp"
-                android:maxLines="1"
                 android:textStyle="bold"/>
 
             <TextView
@@ -51,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/song_artist"
                 android:textColor="#000"
-                android:textSize="12dp"/>
+                android:textSize="11sp"/>
 
         </LinearLayout>
 
