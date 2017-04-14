@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools"
+    android:clickable="true"
+    android:focusable="true"
+    android:backgroundTint="@color/transparent"
+    android:elevation="0dp"
+    app:cardCornerRadius="7dp"
+    android:orientation="vertical"
+    app:cardUseCompatPadding="false"
+    android:foreground="?android:attr/selectableItemBackground">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/transparent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="230dp"
+            android:id="@+id/albumImageView"
+            android:scaleType="fitXY"
+            android:padding="0dp"
+            android:layout_gravity="center"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/music4"
+            android:adjustViewBounds="true"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:background="@color/transparent"
+            android:layout_height="wrap_content"
+            android:id="@+id/song_album"
+            android:text="Songs Album"
+            android:textSize="20sp"
+            android:fontFamily="serif-monospace"
+            android:textColor="#000"
+            android:layout_gravity="center"
+            android:maxLines="1"
+            android:textStyle="bold"
+            />
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

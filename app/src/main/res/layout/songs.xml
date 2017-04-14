@@ -52,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/song_artist"
                 android:textColor="#000"
-                android:textSize="11sp"/>
+                android:textSize="12sp"/>
 
         </LinearLayout>
 

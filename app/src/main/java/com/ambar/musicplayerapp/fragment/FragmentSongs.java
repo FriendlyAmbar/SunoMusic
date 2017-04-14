@@ -161,21 +161,21 @@ public class FragmentSongs extends android.support.v4.app.Fragment {
                     playing = false;
                     stop.setImageResource(R.drawable.play);
                 }
-
-                if (current==songList.size()) {
-
-                }
-
-                else if (current != -1) {
-                    player.start();
-                    playing = true;
-                    stop.setImageResource(R.drawable.pause);
-                }
-
-                else if (songList.size() != 0) {
-                    updatePlayerDetail(current);
-                    playSong(songList.get(0).getData(), 0, 0);
-                    stop.setImageResource(R.drawable.pause);
+                else if (songList.size()!=0){
+                    if (current!=-1){
+                        // Toast.makeText(MainActivity.this,"YO",Toast.LENGTH_LONG).show();
+                        player.start();
+                        playing=true;
+                        playCycle();
+                        updatePlayerDetail(current);
+                        // playSong(listSong.get(current).getDATA(),current,seektime);
+                        stop.setImageResource(R.drawable.pause);
+                    }else {
+                        current=0;
+                        updatePlayerDetail(current);
+                        playSong(songList.get(0).getData(),0,0);
+                        stop.setImageResource(R.drawable.pause);
+                    }
                 }
 
             }
@@ -187,13 +187,19 @@ public class FragmentSongs extends android.support.v4.app.Fragment {
                 if (playing) {
                     player.stop();
                     playing = false;
+                    seekBar.setProgress(0);
                 }
-                if (current != -1) {
+
+                if (current==songList.size()){
+                    //Do nothing
+                }
+                else if (current != -1) {
                     current++;
                     updatePlayerDetail(current);
                     playSong(songList.get(current).getData(), current, 0);
-                } else {
-                    updatePlayerDetail(current);
+                }
+                else {
+                    updatePlayerDetail(0);
                     playSong(songList.get(0).getData(), 0, 0);
                 }
             }
@@ -202,9 +208,11 @@ public class FragmentSongs extends android.support.v4.app.Fragment {
         previous.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                seektime=0;
                 if (playing) {
                     player.stop();
                     playing = false;
+                    seekBar.setProgress(0);
                 }
 
                 if (current == -1 || current == 0) {

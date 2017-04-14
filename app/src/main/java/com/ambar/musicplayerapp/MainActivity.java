@@ -1,13 +1,13 @@
 package com.ambar.musicplayerapp;
 
-import android.content.ContentResolver;
-import android.database.Cursor;
+
 import android.media.MediaPlayer;
 import android.net.Uri;
-import android.provider.MediaStore;
+
 import android.support.design.widget.TabLayout;
+
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -26,12 +26,10 @@ import android.widget.TextView;
 import com.ambar.musicplayerapp.fragment.FragmentArtist;
 import com.ambar.musicplayerapp.fragment.FragmentSongs;
 import com.ambar.musicplayerapp.fragment.FragmentAlbums;
-import com.squareup.picasso.Picasso;
-
 import java.io.File;
-import java.net.URI;
+
 import java.util.ArrayList;
-import java.util.logging.Handler;
+
 
 public class MainActivity extends AppCompatActivity implements FragmentSongs.OnFragmentReady{
 
@@ -52,7 +50,6 @@ public class MainActivity extends AppCompatActivity implements FragmentSongs.OnF
     TextView currentSong, currentArtist;
     SeekBar seekBar;
     android.os.Handler mhandler;
-    Runnable runnable;
 
 
     @Override
@@ -86,9 +83,9 @@ public class MainActivity extends AppCompatActivity implements FragmentSongs.OnF
 
 
 
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+    private class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-        public SectionsPagerAdapter(FragmentManager fm) {
+        private SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
