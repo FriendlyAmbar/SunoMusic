@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools"
+    android:clickable="true"
+    android:focusable="true"
+    android:backgroundTint="@color/transparent"
+    android:elevation="0dp"
+    app:cardCornerRadius="7dp"
+    android:orientation="vertical"
+    app:cardUseCompatPadding="false"
+    android:foreground="?android:attr/selectableItemBackground">
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <GridView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/music4"/>
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:textStyle="bold"
+            android:text="HEllo"/>
+        </GridView>
+
+    </GridLayout>
+</android.support.v7.widget.CardView>

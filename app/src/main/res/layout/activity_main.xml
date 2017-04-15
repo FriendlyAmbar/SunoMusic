@@ -17,8 +17,7 @@
         <android.support.design.widget.TabLayout
             android:id="@+id/tabs"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
+            android:layout_height="wrap_content" />
 
 
     </android.support.design.widget.AppBarLayout>
@@ -28,6 +27,144 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_weight="12"
+        android:layout_gravity="bottom"
+        android:id="@+id/cardView"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:cardBackgroundColor="@color/cardview_light_background"
+        app:cardElevation="7dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="100">
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="65">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="80dp"
+                        android:layout_height="70dp"
+                        android:id="@+id/currentSongImage"
+                        android:background="@drawable/music4" />
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <LinearLayout
+                            android:layout_width="175dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:id="@+id/currentSong"
+                                android:fontFamily="sans-serif"
+                                android:textColor="#000"
+                                android:textSize="15sp"
+                                android:textStyle="bold"
+                                android:text="MadHouse"
+                                android:paddingTop="1dp"
+                                android:paddingLeft="4dp"
+                                android:maxLines="1"/>
+
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/currentArtist"
+                                android:textSize="11sp"
+                                android:textColor="#000"
+                                android:text="Ambar Gupta"
+                                android:paddingTop="1dp"
+                                android:paddingLeft="4dp"
+                                android:maxLines="1"/>
+
+                            <SeekBar
+                                android:id="@+id/seekbar"
+                                style="@android:style/Widget.DeviceDefault.SeekBar"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="top|left"
+                                android:layout_margin="0dp"
+                                android:backgroundTint="@color/colorPrimary"
+                                android:max="100"
+                                android:progress="0"
+                                android:progressBackgroundTint="@color/colorPrimary"
+                                android:thumb="@color/colorAccent" />
+
+
+                        </LinearLayout>
+                    </FrameLayout>
+                </LinearLayout>
+            </FrameLayout>
+
+
+
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="35">
+
+                <ImageButton
+                    android:id="@+id/previous"
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
+                    android:adjustViewBounds="false"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:cropToPadding="false"
+                    android:layout_gravity="left"
+                    android:elevation="0dp"
+                    android:focusable="true"
+                    android:src="@drawable/previous" />
+
+                <ImageButton
+                    android:id="@+id/stop"
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
+                    android:elevation="0dp"
+                    android:clickable="true"
+                    android:layout_gravity="center"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/play" />
+
+                <ImageButton
+                    android:id="@+id/next"
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
+                    android:elevation="0dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:layout_gravity="right"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/next" />
+
+
+            </FrameLayout>
+
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
 
 
 </android.support.design.widget.CoordinatorLayout>
