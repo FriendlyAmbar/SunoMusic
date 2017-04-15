@@ -73,6 +73,9 @@ public class FragmentAlbums extends android.support.v4.app.Fragment {
 
 
 
+
+
+
     public void getAlbumList() {
 
         ContentResolver musicResolver = getContext().getContentResolver();

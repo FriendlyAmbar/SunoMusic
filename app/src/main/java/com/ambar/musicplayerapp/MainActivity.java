@@ -271,6 +271,7 @@ public class MainActivity extends AppCompatActivity{
                         public void onSongClick(int pos) {
                             seektime=0;
                             current=pos;
+                            updatePlayerDetail(current);
                             playSong(songList.get(current).getData(), current, 0);
                         }
                     });
