@@ -39,7 +39,6 @@ import static com.ambar.musicplayerapp.MainActivity.TAG;
 
 public class FragmentAlbums extends android.support.v4.app.Fragment {
 
-    RecyclerView recyclerView;
     ArrayList<Songs> songList;
     SongAdapter songAdapter;
     ListView listView;
@@ -177,7 +176,7 @@ public class FragmentAlbums extends android.support.v4.app.Fragment {
                 public void onClick(View v) {
                     //seektime = 0;
                     //playSong(s.getData(), p, 0);
-                    Toast.makeText(getContext(), "Album" +songs.get(position).getAlbum(),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Album: " +songs.get(position).getAlbum(),Toast.LENGTH_SHORT).show();
 
                 }
             });

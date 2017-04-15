@@ -80,7 +80,7 @@
                                 android:textStyle="bold"
                                 android:text="MadHouse"
                                 android:paddingTop="1dp"
-                                android:paddingLeft="4dp"
+                                android:paddingLeft="10dp"
                                 android:maxLines="1"/>
 
 
@@ -92,7 +92,7 @@
                                 android:textColor="#000"
                                 android:text="Ambar Gupta"
                                 android:paddingTop="1dp"
-                                android:paddingLeft="4dp"
+                                android:paddingLeft="10dp"
                                 android:maxLines="1"/>
 
                             <SeekBar
