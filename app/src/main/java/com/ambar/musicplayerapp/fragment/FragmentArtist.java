@@ -168,7 +168,6 @@ public class FragmentArtist extends android.support.v4.app.Fragment {
                 public void onClick(View v) {
                     //seektime = 0;
                     //playSong(s.getData(), p, 0);
-                    Toast.makeText(getContext(), " Artist: " + songs.get(position).getAlbum(),Toast.LENGTH_SHORT).show();
 
                 }
             });

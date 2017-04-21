@@ -179,7 +179,6 @@ public class FragmentAlbums extends android.support.v4.app.Fragment {
                 public void onClick(View v) {
                     //seektime = 0;
                     //playSong(s.getData(), p, 0);
-                    Toast.makeText(getContext(), "Album: " +songs.get(position).getAlbum(),Toast.LENGTH_SHORT).show();
 
                 }
             });

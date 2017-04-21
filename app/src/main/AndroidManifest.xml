@@ -12,7 +12,7 @@
         android:icon="@mipmap/ic_launcher"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/music5"
+        android:roundIcon="@drawable/beats2"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 

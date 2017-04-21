@@ -1,4 +1,5 @@
 package com.ambar.musicplayerapp.fragment;
+import android.Manifest;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
@@ -44,6 +45,7 @@ public class FragmentSongs extends android.support.v4.app.Fragment {
     LayoutInflater inflater;
     View viewRoot=null;
     RecyclerView recyclerView;
+
 
 
 
@@ -105,8 +107,6 @@ public class FragmentSongs extends android.support.v4.app.Fragment {
         recyclerView.setAdapter(songAdapter=new SongAdapter());
         recyclerView.setAdapter(songAdapter=new SongAdapter());
         return viewRoot;
-
-
     }
 
 
@@ -180,4 +180,5 @@ public class FragmentSongs extends android.support.v4.app.Fragment {
     public void onStop() {
         super.onStop();
     }
+
 }

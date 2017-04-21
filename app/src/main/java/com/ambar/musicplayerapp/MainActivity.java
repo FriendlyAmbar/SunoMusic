@@ -1,6 +1,7 @@
 package com.ambar.musicplayerapp;
 
 
+import android.Manifest;
 import android.content.ContentResolver;
 import android.database.Cursor;
 import android.media.MediaPlayer;
@@ -27,6 +28,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ambar.musicplayerapp.fragment.FragmentArtist;
 import com.ambar.musicplayerapp.fragment.FragmentSongs;
@@ -40,7 +42,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends RunTimePermission{
 
 
 
@@ -62,7 +64,7 @@ public class MainActivity extends AppCompatActivity{
     AsyncTask<Void,Void,ArrayList<Songs>> songFetch=null;
     Runnable runnable;
     Cursor albumCursor, musicCursor;
-
+    private static final int REQUEST_PERMISSIONS = 20;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +89,7 @@ public class MainActivity extends AppCompatActivity{
 
         mhandler = new android.os.Handler();
 
-
+        request_permission();
 
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -240,6 +242,14 @@ public class MainActivity extends AppCompatActivity{
             }
         });
 
+    }
+
+    public void request_permission() {
+        MainActivity.super.requestAppPermissions(new
+                        String[]{Manifest.permission.MEDIA_CONTENT_CONTROL,
+                        Manifest.permission.READ_EXTERNAL_STORAGE}, R.string
+                        .runtime_permissions_txt
+                , REQUEST_PERMISSIONS);
     }
 
 
@@ -425,6 +435,9 @@ public class MainActivity extends AppCompatActivity{
 
 
 
-
+    @Override
+    public void onPermissionsGranted(final int requestCode) {
+        Toast.makeText(this, "Permissions Received.", Toast.LENGTH_LONG).show();
+    }
 
 }

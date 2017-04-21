@@ -5,7 +5,7 @@
         android:drawable="@color/cardview_light_background"/>
 
     <item>
-        <bitmap android:src="@drawable/music7"
+        <bitmap android:src="@drawable/beats2"
             android:gravity="center"/>
     </item>
 </layer-list>
